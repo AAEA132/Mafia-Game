@@ -1,3 +1,4 @@
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -7,13 +8,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Client {
-//    private  int serverNumber = 0;
+    //    private  int serverNumber = 0;
     private  String serverName = null;
     private  int serverPort;
     private static Socket socket;
-     DataInputStream dataInputStream;
-     DataOutputStream dataOutputStream;
-//    private ReadFromServerThreadForClient reader;
+    DataInputStream dataInputStream;
+    DataOutputStream dataOutputStream;
+    //    private ReadFromServerThreadForClient reader;
 //    private WriteClientStuffForServerToBePrinted writer;
     Thread reader;
     Thread writer;
@@ -21,7 +22,7 @@ public class Client {
 //    BufferedReader bufferedReader;
 //    PrintWriter printWriter;
 
-//    public Client(int serverNumber, int serverPort) {
+    //    public Client(int serverNumber, int serverPort) {
 //        this.serverNumber = serverNumber;
 //        this.serverPort = serverPort;
 //    }

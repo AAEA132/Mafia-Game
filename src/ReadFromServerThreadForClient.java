@@ -1,3 +1,4 @@
+
 import java.io.DataInputStream;
 import java.io.IOException;
 
@@ -20,20 +21,20 @@ public class ReadFromServerThreadForClient extends Thread{
                 serverSays = dataInputStream.readUTF();
                 String[] tokens = serverSays.split("\\s+");
                 String command = tokens[0];
-                if (command.equals("READY_PHASE")){
+                if (command.equals("DISABLE_CHAT")){
 //                    client.stopClientMassaging();
                     System.out.println("Waiting for other players to join, no massaging will happen");
                     synchronized (writer) {
 //                        writer.wait();
-                        writer.interrupt();
+                        writer.suspend();
                     }
                 }
-                else if (command.equals("AFTER_READY_PHASE")){
+                else if (command.equals("ENABLE_CHAT")){
 //                    client.activateClient();
                     System.out.println("Enough players joined, Massaging enabled");
                     synchronized (writer) {
 //                        writer.notifyAll();
-                        writer.start();
+                        writer.resume();
                     }
                 }
                 else {

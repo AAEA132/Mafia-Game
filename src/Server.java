@@ -1,3 +1,4 @@
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -6,7 +7,7 @@ import java.util.ArrayList;
 public class Server extends Thread{
     private  int ready_player_counter = 0;
     private final int number_of_players;
-//    private final Narrator narrator;
+    private final Narrator narrator;
     private final int port;
     private ArrayList<ClientHandler> clientHandlers = new ArrayList<>();
     private ArrayList<Player> players = new ArrayList<>();
@@ -47,7 +48,7 @@ public class Server extends Thread{
 
     public Server(int port, int number_of_players) {
         this.number_of_players = number_of_players;
-//        narrator = new Narrator();
+        narrator = new Narrator(this);
         this.port = port;
     }
 
@@ -62,6 +63,8 @@ public class Server extends Thread{
     @Override
     public void run() {
         try {
+//            Thread thread = new Thread(this::printHowManyPlayersRemained);
+//            thread.start();
             ServerSocket serverSocket = new ServerSocket(port);
             while (ready_player_counter<number_of_players){
                 System.out.println("Waiting for a client to join");
@@ -71,9 +74,29 @@ public class Server extends Thread{
                 clientHandlers.add(clientHandler);
                 clientHandler.start();
             }
+            narrator.start();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
     }
+
+//    private void printHowManyPlayersRemained() {
+//        int numberOfPreviousReadyPlayers = -1;
+//        int n = 0;
+//        while (true){
+//            if (numberOfPreviousReadyPlayers != (n = ready_player_counter)){
+//                numberOfPreviousReadyPlayers = n;
+//                try {
+//                    for (ClientHandler clientHandler : clientHandlers){
+//                        clientHandler.send("Number of players remained: " + numberOfRemainedPlayersToTypeREADY());
+//                    }
+////                    dataOutputStream.writeUTF("Number of players remained: " + server.numberOfRemainedPlayersToTypeREADY());
+////                    dataOutputStream.flush();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
+//    }
 }
