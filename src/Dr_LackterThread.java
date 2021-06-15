@@ -1,11 +1,20 @@
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * The type Dr lackter thread.
+ */
 public class Dr_LackterThread extends Thread{
     private Narrator narrator;
     private ClientHandler clientHandler;
     private ArrayList<Player> players;
 
+    /**
+     * Instantiates a new Dr lackter thread.
+     *
+     * @param narrator      the narrator
+     * @param clientHandler the client handler
+     */
     public Dr_LackterThread(Narrator narrator,ClientHandler clientHandler) {
         this.narrator = narrator;
         this.clientHandler = clientHandler;

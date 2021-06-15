@@ -1,9 +1,20 @@
 import java.io.IOException;
 
+/**
+ * The type Mayor thread.
+ */
 public class MayorThread extends Thread{
     private Player mostVotedPlayer;
     private Narrator narrator;
     private ClientHandler clientHAndler;
+
+    /**
+     * Instantiates a new Mayor thread.
+     *
+     * @param clientHandler   the client handler
+     * @param narrator        the narrator
+     * @param mostVotedPlayer the most voted player
+     */
     public MayorThread(ClientHandler clientHandler, Narrator narrator, Player mostVotedPlayer) {
         this.clientHAndler = clientHandler;
         this.narrator = narrator;

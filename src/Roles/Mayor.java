@@ -1,9 +1,17 @@
 package Roles;
 
+/**
+ * The type Mayor.
+ */
 public class Mayor extends Role{
 
     private boolean isInGame;
 
+    /**
+     * Instantiates a new Mayor.
+     *
+     * @param isInGame shows role is included in a game or not
+     */
     public Mayor(boolean isInGame) {
         this.isInGame = isInGame;
     }

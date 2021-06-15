@@ -6,15 +6,33 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import Roles.*;
 
+/**
+ * The type Narrator.
+ */
 public class Narrator extends Thread{
 
     private final Server server;
+    /**
+     * The Number of players.
+     */
     int numberOfPlayers;
+    /**
+     * The Client handlers.
+     */
     ArrayList<ClientHandler> clientHandlers;
 
     private ArrayList<Player> players;
+    /**
+     * The Mafia group.
+     */
     ArrayList<Player> mafiaGroup;
+    /**
+     * The City group.
+     */
     ArrayList<Player> cityGroup;
+    /**
+     * The Roles.
+     */
     ArrayList<Role> roles;
     private ArrayList<Player> overallDeadPlayers;
 
@@ -36,94 +54,236 @@ public class Narrator extends Thread{
     private boolean stateGameState;
 
 
+    /**
+     * Is state game state boolean.
+     *
+     * @return the boolean
+     */
     public boolean isStateGameState() {
         return stateGameState;
     }
+
+    /**
+     * Sets state game state.
+     *
+     * @param stateGameState the state game state
+     */
     public void setStateGameState(boolean stateGameState) {
         this.stateGameState = stateGameState;
     }
 
+    /**
+     * Is has citizen boolean.
+     *
+     * @return the boolean
+     */
     public boolean isHasCitizen() {
         return hasCitizen;
     }
+
+    /**
+     * Sets has citizen.
+     *
+     * @param hasCitizen the has citizen
+     */
     public void setHasCitizen(boolean hasCitizen) {
         this.hasCitizen = hasCitizen;
     }
 
+    /**
+     * Is has detective boolean.
+     *
+     * @return the boolean
+     */
     public boolean isHasDetective() {
         return hasDetective;
     }
+
+    /**
+     * Sets has detective.
+     *
+     * @param hasDetective the has detective
+     */
     public void setHasDetective(boolean hasDetective) {
         this.hasDetective = hasDetective;
     }
 
+    /**
+     * Is has die hard boolean.
+     *
+     * @return the boolean
+     */
     public boolean isHasDieHard() {
         return hasDieHard;
     }
+
+    /**
+     * Sets has die hard.
+     *
+     * @param hasDieHard the has die hard
+     */
     public void setHasDieHard(boolean hasDieHard) {
         this.hasDieHard = hasDieHard;
     }
 
+    /**
+     * Is has dr boolean.
+     *
+     * @return the boolean
+     */
     public boolean isHasDr() {
         return hasDr;
     }
+
+    /**
+     * Sets has dr.
+     *
+     * @param hasDr the has dr
+     */
     public void setHasDr(boolean hasDr) {
         this.hasDr = hasDr;
     }
 
+    /**
+     * Is has dr lackter boolean.
+     *
+     * @return the boolean
+     */
     public boolean isHasDr_Lackter() {
         return hasDr_Lackter;
     }
+
+    /**
+     * Sets has dr lackter.
+     *
+     * @param hasDr_Lackter the has dr lackter
+     */
     public void setHasDr_Lackter(boolean hasDr_Lackter) {
         this.hasDr_Lackter = hasDr_Lackter;
     }
 
+    /**
+     * Is has god father boolean.
+     *
+     * @return the boolean
+     */
     public boolean isHasGodFather() {
         return hasGodFather;
     }
+
+    /**
+     * Sets has god father.
+     *
+     * @param hasGodFather the has god father
+     */
     public void setHasGodFather(boolean hasGodFather) {
         this.hasGodFather = hasGodFather;
     }
 
+    /**
+     * Is has le professionnel boolean.
+     *
+     * @return the boolean
+     */
     public boolean isHasLe_Professionnel() {
         return hasLe_Professionnel;
     }
+
+    /**
+     * Sets has le professionnel.
+     *
+     * @param hasLe_Professionnel the has le professionnel
+     */
     public void setHasLe_Professionnel(boolean hasLe_Professionnel) {
         this.hasLe_Professionnel = hasLe_Professionnel;
     }
 
+    /**
+     * Is has mayor boolean.
+     *
+     * @return the boolean
+     */
     public boolean isHasMayor() {
         return hasMayor;
     }
+
+    /**
+     * Sets has mayor.
+     *
+     * @param hasMayor the has mayor
+     */
     public void setHasMayor(boolean hasMayor) {
         this.hasMayor = hasMayor;
     }
 
+    /**
+     * Is has psychologist boolean.
+     *
+     * @return the boolean
+     */
     public boolean isHasPsychologist() {
         return hasPsychologist;
     }
+
+    /**
+     * Sets has psychologist.
+     *
+     * @param hasPsychologist the has psychologist
+     */
     public void setHasPsychologist(boolean hasPsychologist) {
         this.hasPsychologist = hasPsychologist;
     }
 
+    /**
+     * Is has simple mafia boolean.
+     *
+     * @return the boolean
+     */
     public boolean isHasSimpleMafia() {
         return hasSimpleMafia;
     }
+
+    /**
+     * Sets has simple mafia.
+     *
+     * @param hasSimpleMafia the has simple mafia
+     */
     public void setHasSimpleMafia(boolean hasSimpleMafia) {
         this.hasSimpleMafia = hasSimpleMafia;
     }
 
+    /**
+     * Gets mafia shoot.
+     *
+     * @return the mafia shoot
+     */
     public boolean getMafiaShoot() {
         return mafiaShoot;
     }
+
+    /**
+     * Sets mafia shoot.
+     *
+     * @param mafiaShoot the mafia shoot
+     */
     public void setMafiaShoot(boolean mafiaShoot) {
         this.mafiaShoot = mafiaShoot;
     }
 
+    /**
+     * Gets players.
+     *
+     * @return the players
+     */
     public ArrayList<Player> getPlayers() {
         return players;
     }
 
+    /**
+     * Instantiates a new Narrator.
+     *
+     * @param server the server
+     */
     public Narrator(Server server) {
         this.server = server;
         synchronized (this.server) {
@@ -639,6 +799,9 @@ public class Narrator extends Thread{
         return player1;
     }
 
+    /**
+     * Send mafia teammate list to mafia group.
+     */
     public void sendMafiaTeammateListToMafiaGroup() {
         synchronized (mafiaGroup) {
             for (Player player : mafiaGroup) {
@@ -662,6 +825,11 @@ public class Narrator extends Thread{
         }
     }
 
+    /**
+     * Send msg to all players.
+     *
+     * @param msg the msg
+     */
     public void sendMsgToAllPlayers(String msg) {
         synchronized (clientHandlers) {
             for (ClientHandler clientHandler : clientHandlers) {
@@ -871,6 +1039,12 @@ public class Narrator extends Thread{
         }
     }
 
+    /**
+     * Is vote valid boolean.
+     *
+     * @param clientVote the client vote
+     * @return the boolean
+     */
     public boolean isVoteValid(String clientVote) {
         for (Player player : players){
             if (player.getName().equals(clientVote) && player.getIsInGame() && player.getIsInServer()){
@@ -880,6 +1054,11 @@ public class Narrator extends Thread{
         return false;
     }
 
+    /**
+     * Add vote.
+     *
+     * @param clientVote the client vote
+     */
     public void addVote(String clientVote) {
         for (Player player : players){
             if (player.getName().equals(clientVote)){
@@ -888,6 +1067,11 @@ public class Narrator extends Thread{
         }
     }
 
+    /**
+     * Shoot.
+     *
+     * @param clientVote the client vote
+     */
     public void shoot(String clientVote) {
         for (Player player : players){
             if (player.getName().equals(clientVote) && player.getIsInGame() && player.getIsInServer()){
@@ -897,6 +1081,11 @@ public class Narrator extends Thread{
         }
     }
 
+    /**
+     * Send msg to mafia group.
+     *
+     * @param s the s
+     */
     public void sendMsgToMafiaGroup(String s) {
         for (Player player : mafiaGroup){
             try {
@@ -907,6 +1096,11 @@ public class Narrator extends Thread{
         }
     }
 
+    /**
+     * Heal.
+     *
+     * @param clientVote the client vote
+     */
     public void heal(String clientVote) {
         for (Player player : players){
             if (player.getName().equals(clientVote) && player.getIsInGame() && player.getIsInServer()){
@@ -915,6 +1109,13 @@ public class Narrator extends Thread{
         }
     }
 
+    /**
+     * Is heal valid boolean.
+     *
+     * @param clientVote the client vote
+     * @param dr         the dr
+     * @return the boolean
+     */
     public boolean isHealValid(String clientVote, Player dr) {
         for (Player player : players){
             if (player.getName().equals(clientVote) && player.getIsInGame() && player.getIsInServer()){
@@ -939,6 +1140,13 @@ public class Narrator extends Thread{
         return false;
     }
 
+    /**
+     * Is detect valid boolean.
+     *
+     * @param clientVote the client vote
+     * @param detective  the detective
+     * @return the boolean
+     */
     public boolean isDetectValid(String clientVote, Player detective) {
         for (Player player : players){
             if (player.getName().equals(clientVote) && player.getIsInGame() && player.getIsInServer()){
@@ -948,6 +1156,12 @@ public class Narrator extends Thread{
         return false;
     }
 
+    /**
+     * Detect.
+     *
+     * @param clientVote    the client vote
+     * @param clientHandler the client handler
+     */
     public void detect(String clientVote, ClientHandler clientHandler) {
         for (Player player : players){
             if (player.getName().equals(clientVote) && player.getIsInGame() && player.getIsInServer()){
@@ -978,6 +1192,13 @@ public class Narrator extends Thread{
         }
     }
 
+    /**
+     * Is shot valid boolean.
+     *
+     * @param clientVote the client vote
+     * @param pro        the pro
+     * @return the boolean
+     */
     public boolean isShotValid(String clientVote, Player pro) {
         for (Player player : players){
             if (player.getName().equals(clientVote) && player.getIsInGame() && player.getIsInServer()){
@@ -987,6 +1208,12 @@ public class Narrator extends Thread{
         return false;
     }
 
+    /**
+     * Shoot p.
+     *
+     * @param clientVote    the client vote
+     * @param clientHandler the client handler
+     */
     public void shootP(String clientVote, ClientHandler clientHandler) {
         for (Player player : players){
             if (player.getName().equals(clientVote) && player.getIsInGame() && player.getIsInServer()){
@@ -1001,6 +1228,12 @@ public class Narrator extends Thread{
         }
     }
 
+    /**
+     * Silence.
+     *
+     * @param clientVote    the client vote
+     * @param clientHandler the client handler
+     */
     public void silence(String clientVote, ClientHandler clientHandler) {
         for (Player player : players){
             if (player.getName().equals(clientVote) && player.getIsInGame() && player.getIsInServer()){

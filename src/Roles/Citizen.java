@@ -1,9 +1,17 @@
 package Roles;
 
 
+/**
+ * The type Citizen.
+ */
 public class Citizen extends Role{
     private boolean isInGame;
 
+    /**
+     * Instantiates a new Citizen.
+     *
+     * @param isInGame shows role is included in a game or not
+     */
     public Citizen(boolean isInGame) {
         this.isInGame = isInGame;
     }

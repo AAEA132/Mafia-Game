@@ -5,11 +5,20 @@ import Roles.Dr_Lackter;
 import Roles.GodFather;
 import Roles.SimpleMafia;
 
+/**
+ * The type Mafia thread.
+ */
 public class MafiaThread extends Thread{
     private Narrator narrator;
     private ClientHandler clientHandler;
     private ArrayList<Player> players;
 
+    /**
+     * Instantiates a new Mafia thread.
+     *
+     * @param narrator      the narrator
+     * @param clientHandler the client handler
+     */
     public MafiaThread(Narrator narrator,ClientHandler clientHandler) {
         this.narrator = narrator;
         this.clientHandler = clientHandler;

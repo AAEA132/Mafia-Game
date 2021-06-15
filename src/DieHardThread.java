@@ -2,11 +2,20 @@ import java.io.IOException;
 import java.util.ArrayList;
 import Roles.DieHard;
 
+/**
+ * The type Die hard thread.
+ */
 public class DieHardThread extends Thread {
     private Narrator narrator;
     private ClientHandler clientHandler;
     private ArrayList<Player> players;
 
+    /**
+     * Instantiates a new Die hard thread.
+     *
+     * @param narrator      the narrator
+     * @param clientHandler the client handler
+     */
     public DieHardThread(Narrator narrator,ClientHandler clientHandler) {
         this.narrator = narrator;
         this.clientHandler = clientHandler;

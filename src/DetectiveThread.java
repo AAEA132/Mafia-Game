@@ -1,11 +1,20 @@
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * The type Detective thread.
+ */
 public class DetectiveThread extends Thread {
     private Narrator narrator;
     private ClientHandler clientHandler;
     private ArrayList<Player> players;
 
+    /**
+     * Instantiates a new Detective thread.
+     *
+     * @param narrator      the narrator
+     * @param clientHandler the client handler
+     */
     public DetectiveThread(Narrator narrator,ClientHandler clientHandler) {
         this.narrator = narrator;
         this.clientHandler = clientHandler;

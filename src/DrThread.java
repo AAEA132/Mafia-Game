@@ -1,11 +1,20 @@
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * The type Dr thread.
+ */
 public class DrThread extends Thread{
     private Narrator narrator;
     private ClientHandler clientHandler;
     private ArrayList<Player> players;
 
+    /**
+     * Instantiates a new Dr thread.
+     *
+     * @param narrator      the narrator
+     * @param clientHandler the client handler
+     */
     public DrThread(Narrator narrator,ClientHandler clientHandler) {
         this.narrator = narrator;
         this.clientHandler = clientHandler;

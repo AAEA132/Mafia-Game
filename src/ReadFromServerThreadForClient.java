@@ -2,11 +2,21 @@
 import java.io.DataInputStream;
 import java.io.IOException;
 
+/**
+ * The type Read from server thread for client.
+ */
 public class ReadFromServerThreadForClient extends Thread{
     private final DataInputStream dataInputStream;
     private final Client client;
     private final Thread writer;
 
+    /**
+     * Instantiates a new Read from server thread for client.
+     *
+     * @param dataInputStream the data input stream
+     * @param client          the client
+     * @param writer          the writer
+     */
     public ReadFromServerThreadForClient(DataInputStream dataInputStream, Client client, Thread writer) {
         this.dataInputStream = dataInputStream;
         this.client = client;

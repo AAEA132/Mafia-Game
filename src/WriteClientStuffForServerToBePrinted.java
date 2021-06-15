@@ -3,11 +3,20 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Scanner;
 
+/**
+ * The type Write client stuff for server to be printed.
+ */
 public class WriteClientStuffForServerToBePrinted extends Thread{
     private final DataOutputStream dataOutputStream;
     private final Client client;
 
 
+    /**
+     * Instantiates a new Write client stuff for server to be printed.
+     *
+     * @param dataOutputStream the data output stream
+     * @param client           the client
+     */
     public WriteClientStuffForServerToBePrinted(DataOutputStream dataOutputStream, Client client) {
         this.dataOutputStream = dataOutputStream;
         this.client = client;

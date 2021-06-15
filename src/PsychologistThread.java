@@ -1,11 +1,20 @@
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * The type Psychologist thread.
+ */
 public class PsychologistThread extends Thread {
     private Narrator narrator;
     private ClientHandler clientHandler;
     private ArrayList<Player> players;
 
+    /**
+     * Instantiates a new Psychologist thread.
+     *
+     * @param narrator      the narrator
+     * @param clientHandler the client handler
+     */
     public PsychologistThread(Narrator narrator,ClientHandler clientHandler) {
         this.narrator = narrator;
         this.clientHandler = clientHandler;

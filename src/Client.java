@@ -1,24 +1,50 @@
-
 import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * The type Client.
+ */
 public class Client {
     private  String serverName = null;
     private  int serverPort;
     private static Socket socket;
+    /**
+     * The Data input stream.
+     */
     DataInputStream dataInputStream;
+    /**
+     * The Data output stream.
+     */
     DataOutputStream dataOutputStream;
+    /**
+     * The Reader that reads from server/client_handler and prints it to console.
+     */
     Thread reader;
+    /**
+     * The Writer that writes the things client types for server/client_handler
+     */
     Thread writer;
 
+    /**
+     * Instantiates a new Client.
+     *
+     * @param serverName the server name
+     * @param serverPort the server port
+     */
     public Client(String serverName, int serverPort) {
         this.serverName = serverName;
         this.serverPort = serverPort;
     }
 
+    /**
+     * The entry point of application.
+     * Fisrt it gets the name and port of the server, then it tries to connect by given info and will ask
+     * client to try again if connection fails
+     * After that it creates and starts the reader and writer threads to communicate with server
+     */
     public static void main(String[] args) {
         Client client;
         int portNumber = 0;
@@ -66,11 +92,17 @@ public class Client {
         System.out.println("Test");
     }
 
+    /**
+     * Creates the reader and writer threads
+     */
     private void buildReaderAndWriterThreads() {
         writer = new WriteClientStuffForServerToBePrinted(dataOutputStream , this);
         reader = new ReadFromServerThreadForClient(dataInputStream , this, writer);
     }
 
+    /**
+     * Tries to connect; Returns true if it's successful, if not it returns false
+     */
     private boolean connect() {
         try {
             socket = new Socket(serverName,serverPort);
@@ -83,6 +115,13 @@ public class Client {
         }
         return false;
     }
+
+    /**
+     * Checks if the given IP address has the valid format
+     *
+     * @param ip the ip adheres
+     * @return the boolean which will be true if the format is correct and if not, it'll be false
+     */
     public static boolean isValidIPAddress(String ip) {
         // Regex for digit from 0 to 255.
         String zeroTo255
@@ -98,7 +137,6 @@ public class Client {
                 + zeroTo255 + "\\."
                 + zeroTo255;
 
-        // Compile the ReGex
         Pattern p = Pattern.compile(regex);
 
         // If the IP address is empty
@@ -116,13 +154,20 @@ public class Client {
         // matched the ReGex
         return m.matches();
     }
+
+    /**
+     * Starts writer thread
+     */
     private void startMassageWriting() {
         writer.start();
     }
+    /**
+     * Starts reader thread
+     */
     private void startMassageReading() {
         reader.start();
     }
-    private void handleMassage(String massage) throws IOException {
-        System.out.println(massage);
-    }
+//    private void handleMassage(String massage) throws IOException {
+//        System.out.println(massage);
+//    }
 }

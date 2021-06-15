@@ -2,6 +2,9 @@ import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 
+/**
+ * The type Client handler.
+ */
 public class ClientHandler extends Thread{
     private final Socket clientSocket;
     private final Server server;
@@ -9,10 +12,20 @@ public class ClientHandler extends Thread{
     private String username = "Unknown";
     private Player player;
 
+    /**
+     * Gets player.
+     *
+     * @return the player
+     */
     public Player getPlayer() {
         return player;
     }
 
+    /**
+     * Gets username.
+     *
+     * @return the username
+     */
     public String getUsername() {
         return username;
     }
@@ -20,6 +33,13 @@ public class ClientHandler extends Thread{
     private DataInputStream dataInputStream;
     private DataOutputStream dataOutputStream;
 
+    /**
+     * Instantiates a new Client handler.
+     *
+     * @param clientSocket the client socket
+     * @param server       the server
+     * @param narrator     the narrator
+     */
     public ClientHandler(Socket clientSocket, Server server, Narrator narrator) {
         this.clientSocket = clientSocket;
         this.server = server;
@@ -149,11 +169,23 @@ public class ClientHandler extends Thread{
         clientSocket.close();
     }
 
+    /**
+     * Send the massage to client's reader thread to print it.
+     *
+     * @param msg the msg
+     * @throws IOException the io exception
+     */
     public void send(String msg) throws IOException {
         dataOutputStream.writeUTF(msg);
         dataOutputStream.flush();
     }
 
+    /**
+     * Reads the string from client
+     *
+     * @return the string
+     * @throws IOException the io exception
+     */
     public String read() throws IOException {
         String s = dataInputStream.readUTF();
         return s;

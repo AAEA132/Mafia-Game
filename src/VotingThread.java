@@ -1,8 +1,18 @@
 import java.io.IOException;
 
+/**
+ * The type Voting thread.
+ */
 public class VotingThread extends Thread{
     private Narrator narrator;
     private ClientHandler clientHandler;
+
+    /**
+     * Instantiates a new Voting thread.
+     *
+     * @param clientHandler the client handler
+     * @param narrator      the narrator
+     */
     public VotingThread(ClientHandler clientHandler, Narrator narrator) {
         synchronized (clientHandler) {
             this.clientHandler = clientHandler;

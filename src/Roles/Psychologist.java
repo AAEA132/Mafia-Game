@@ -1,9 +1,17 @@
 package Roles;
 
+/**
+ * The type Psychologist.
+ */
 public class Psychologist extends Role{
 
     private boolean isInGame;
 
+    /**
+     * Instantiates a new Psychologist.
+     *
+     * @param isInGame shows role is included in a game or not
+     */
     public Psychologist(boolean isInGame) {
         this.isInGame = isInGame;
     }

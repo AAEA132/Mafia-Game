@@ -1,10 +1,18 @@
 package Roles;
 
 
+/**
+ * The type God father.
+ */
 public class GodFather extends Role{
 
     private boolean isInGame;
 
+    /**
+     * Instantiates a new God father.
+     *
+     * @param isInGame shows role is included in a game or not
+     */
     public GodFather(boolean isInGame) {
         this.isInGame = isInGame;
     }

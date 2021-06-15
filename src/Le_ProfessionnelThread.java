@@ -2,11 +2,20 @@ import java.io.IOException;
 import java.util.ArrayList;
 import Roles.Le_Professionnel;
 
+/**
+ * The type Le professionnel thread.
+ */
 public class Le_ProfessionnelThread extends Thread {
     private Narrator narrator;
     private ClientHandler clientHandler;
     private ArrayList<Player> players;
 
+    /**
+     * Instantiates a new Le professionnel thread.
+     *
+     * @param narrator      the narrator
+     * @param clientHandler the client handler
+     */
     public Le_ProfessionnelThread(Narrator narrator,ClientHandler clientHandler) {
         this.narrator = narrator;
         this.clientHandler = clientHandler;

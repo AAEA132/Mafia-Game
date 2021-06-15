@@ -1,8 +1,17 @@
 package Roles;
+
+/**
+ * The type Simple mafia.
+ */
 public class SimpleMafia extends Role{
 
     private boolean isInGame;
 
+    /**
+     * Instantiates a new Simple mafia.
+     *
+     * @param isInGame shows role is included in a game or not
+     */
     public SimpleMafia(boolean isInGame) {
         this.isInGame = isInGame;
     }
