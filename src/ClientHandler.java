@@ -1,16 +1,11 @@
-//import Main.ServerWorker;
-
-
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
-//import java.util.Scanner;
 
 public class ClientHandler extends Thread{
     private final Socket clientSocket;
     private final Server server;
+    private Narrator narrator;
     private String username = "Unknown";
     private Player player;
 
@@ -22,14 +17,13 @@ public class ClientHandler extends Thread{
         return username;
     }
 
-    //    private PrintWriter printWriter;
-//    private BufferedReader bufferedReader;
     private DataInputStream dataInputStream;
     private DataOutputStream dataOutputStream;
 
-    public ClientHandler(Socket clientSocket, Server server) {
+    public ClientHandler(Socket clientSocket, Server server, Narrator narrator) {
         this.clientSocket = clientSocket;
         this.server = server;
+        this.narrator = narrator;
     }
 
     @Override
@@ -50,42 +44,22 @@ public class ClientHandler extends Thread{
             } catch (IOException ioException) {
                 ioException.printStackTrace();
             }
-//            e.printStackTrace();
         }
     }
 
     private void handleClient() throws IOException {
         dataInputStream = new DataInputStream(clientSocket.getInputStream());
         dataOutputStream = new DataOutputStream(clientSocket.getOutputStream());
-//        printWriter = new PrintWriter(clientSocket.getOutputStream() , true);
-//        bufferedReader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         String clientLine = "";
         boolean ok = true;
         while (true){
-//            printWriter.print("Please enter a username: ");
             dataOutputStream.writeUTF("Please enter a username: ");
             dataOutputStream.flush();
-//            dataOutputStream.writeUTF("\n");
-//            dataOutputStream.flush();
 
             String clientResponse = dataInputStream.readUTF();
-//            String clientResponse = bufferedReader.readLine();
 
-//            ArrayList<ClientHandler> clientHandlers = server.getClientHandlers();
-
-//            for (ClientHandler clientHandler : clientHandlers){
-//                if (clientHandler.username.equals(clientResponse)){
-////                    printWriter.println("Username taken, try again!");
-//                    dataOutputStream.writeUTF("Username taken, try again!");
-//                    dataOutputStream.flush();
-//
-//                    ok = false;
-//                    break;
-//                }
-//            }
             synchronized (server) {
                 if (!server.containsUserName(clientResponse)) {
-//                printWriter.println("Username accepted!");
                     dataOutputStream.writeUTF("Username accepted!");
                     dataOutputStream.flush();
 
@@ -99,8 +73,6 @@ public class ClientHandler extends Thread{
                 }
             }
         }
-//        Thread thread = new Thread(this::printHowManyPlayersRemained);
-//        thread.start();
         while (true){
             dataOutputStream.writeUTF("In order to join, you have to type READY");
             dataOutputStream.flush();
@@ -109,6 +81,9 @@ public class ClientHandler extends Thread{
 
             if (clientResponse.equals("READY")){
                 dataOutputStream.writeUTF("Waiting for other players...");
+                synchronized (player) {
+                    player.setInGame(true);
+                }
                 synchronized (server) {
                     server.add1FromReadyCounter();
                     System.out.println("1 client is ready and added");
@@ -121,21 +96,10 @@ public class ClientHandler extends Thread{
 
             }
         }
-//        thread.stop();
 
         dataOutputStream.writeUTF("DISABLE_CHAT");
         dataOutputStream.flush();
 
-//        while (true){
-//            if (server.numberOfRemainedPlayersToTypeREADY()!=0){
-//                dataInputStream.readUTF();
-//            }
-//            else if (server.numberOfRemainedPlayersToTypeREADY()==0){
-//                dataOutputStream.writeUTF("AFTER_READY_PHASE");
-//                dataOutputStream.flush();
-//                break;
-//            }
-//        }
         while (true){
             synchronized (server) {
                 if (server.numberOfRemainedPlayersToTypeREADY() == 0) {
@@ -147,22 +111,19 @@ public class ClientHandler extends Thread{
         }
 
         while (true){
-            if (player.getChatStatus()) {
-                clientLine = dataInputStream.readUTF();
-//            clientLine = bufferedReader.readLine();
-                if (clientLine.equals("EXIT")) {
-                    handleExit();
-                    break;
-                } else {
-                    synchronized (server) {
-                        ArrayList<ClientHandler> clientHandlers = server.getClientHandlers();
+            clientLine = dataInputStream.readUTF();
+            if (clientLine.equals("EXIT")) {
+                handleExit();
+                break;
+            } else {
+                synchronized (server) {
+                    ArrayList<ClientHandler> clientHandlers = server.getClientHandlers();
 
-                        //send other online users current user's msg
-                        for (ClientHandler clientHandler : clientHandlers) {
-                            if (!username.equals(clientHandler.username)) {
-                                String msg = username + " : " + clientLine;
-                                clientHandler.send(msg);
-                            }
+                    //send other online users current user's msg
+                    for (ClientHandler clientHandler : clientHandlers) {
+                        if (!username.equals(clientHandler.username)) {
+                            String msg = username + " : " + clientLine;
+                            clientHandler.send(msg);
                         }
                     }
                 }
@@ -170,38 +131,12 @@ public class ClientHandler extends Thread{
         }
 
     }
-
-//    private synchronized void printHowManyPlayersRemained() {
-//        int numberOfPreviusRadyPlayers = -1;
-//        int n = 0;
-//        while (true){
-//            if (numberOfPreviusRadyPlayers != (n = server.getReady_player_counter())){
-//                numberOfPreviusRadyPlayers = n;
-//                try {
-//                    dataOutputStream.writeUTF("Number of players remained: " + server.numberOfRemainedPlayersToTypeREADY());
-//                    dataOutputStream.flush();
-//                } catch (IOException e) {
-//                    try {
-//                        clientSocket.close();
-//                        System.err.println("Socket Closed!");
-//                        server.remove1FromReadyCounter();
-//                        e.printStackTrace();
-//                    } catch (IOException ioException) {
-//                        ioException.printStackTrace();
-//                    }
-//                }
-//            }
-//        }
-//    }
-
-
     private synchronized void handleExit() throws IOException {
         server.removeClientHandler(this);
         server.removePlayer(this.player);
 
         ArrayList<ClientHandler> clientHandlers = server.getClientHandlers();
 
-        //send other online users current user's leaving
         for (ClientHandler clientHandler : clientHandlers){
             if (!username.equals(clientHandler.username)) {
                 String msg = "Went offline : " + username + "\n";
@@ -217,6 +152,10 @@ public class ClientHandler extends Thread{
     public void send(String msg) throws IOException {
         dataOutputStream.writeUTF(msg);
         dataOutputStream.flush();
-//        printWriter.println(msg);
+    }
+
+    public String read() throws IOException {
+        String s = dataInputStream.readUTF();
+        return s;
     }
 }

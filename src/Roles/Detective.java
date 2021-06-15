@@ -1,7 +1,7 @@
 package Roles;
 
 
-public class Detective extends Role {
+public class Detective extends Role{
     private boolean isInGame;
 
     public Detective(boolean isInGame) {

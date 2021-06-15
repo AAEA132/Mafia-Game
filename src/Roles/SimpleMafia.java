@@ -1,7 +1,5 @@
 package Roles;
-
-
-public class SimpleMafia extends Role {
+public class SimpleMafia extends Role{
 
     private boolean isInGame;
 

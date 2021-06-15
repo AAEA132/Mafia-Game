@@ -1,9 +1,6 @@
 package Roles;
 
-
-public class Mayor extends Role {
-
-
+public class Mayor extends Role{
 
     private boolean isInGame;
 

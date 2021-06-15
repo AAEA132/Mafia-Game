@@ -1,7 +1,6 @@
 package Roles;
 
-
-public class Psychologist extends Role {
+public class Psychologist extends Role{
 
     private boolean isInGame;
 

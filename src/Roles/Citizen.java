@@ -1,7 +1,7 @@
 package Roles;
 
 
-public class Citizen extends Role {
+public class Citizen extends Role{
     private boolean isInGame;
 
     public Citizen(boolean isInGame) {

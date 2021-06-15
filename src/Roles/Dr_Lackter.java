@@ -1,10 +1,9 @@
 package Roles;
 
-
-public class Dr_Lackter extends Role {
+public class Dr_Lackter extends Role{
 
     private boolean isInGame;
-
+    private boolean hasSavedHimSelf;
     public Dr_Lackter(boolean isInGame) {
         this.isInGame = isInGame;
     }
@@ -22,5 +21,13 @@ public class Dr_Lackter extends Role {
     @Override
     public void setIsInGame(boolean state) {
         isInGame = state;
+    }
+
+    public boolean getHasSavedHimSelf() {
+        return hasSavedHimSelf;
+    }
+
+    public void setHasSavedHimSelf(boolean hasSavedHimSelf) {
+        this.hasSavedHimSelf = hasSavedHimSelf;
     }
 }

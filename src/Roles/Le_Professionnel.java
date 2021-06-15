@@ -1,10 +1,9 @@
 package Roles;
 
-
-public class Le_Professionnel extends Role {
-
+public class Le_Professionnel extends Role{
 
     private boolean isInGame;
+    int shots = 1;
 
     public Le_Professionnel(boolean isInGame) {
         this.isInGame = isInGame;
@@ -23,5 +22,13 @@ public class Le_Professionnel extends Role {
     @Override
     public void setIsInGame(boolean state) {
         isInGame = state;
+    }
+
+    public int getShots() {
+        return shots;
+    }
+
+    public void setShots(int shots) {
+        this.shots = shots;
     }
 }

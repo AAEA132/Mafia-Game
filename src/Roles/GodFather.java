@@ -1,7 +1,7 @@
 package Roles;
 
 
-public class GodFather extends Role {
+public class GodFather extends Role{
 
     private boolean isInGame;
 

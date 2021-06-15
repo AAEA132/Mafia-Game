@@ -63,40 +63,57 @@ public class Server extends Thread{
     @Override
     public void run() {
         try {
-//            Thread thread = new Thread(this::printHowManyPlayersRemained);
-//            thread.start();
             ServerSocket serverSocket = new ServerSocket(port);
-            while (ready_player_counter<number_of_players){
-                System.out.println("Waiting for a client to join");
-                Socket clientSocket = serverSocket.accept();
-                System.out.println("New client connected "+clientSocket);
-                ClientHandler clientHandler = new ClientHandler(clientSocket, this);
-                clientHandlers.add(clientHandler);
-                clientHandler.start();
+            Server server = this;
+            Thread thread = new Thread(){
+                @Override
+                public void run() {
+                    while (ready_player_counter<number_of_players){
+                        if (ready_player_counter>=number_of_players)
+                            break;
+                        System.out.println("Waiting for a client to join");
+                        if (ready_player_counter>=number_of_players)
+                            break;
+                        Socket clientSocket = null;
+                        try {
+                            clientSocket = serverSocket.accept();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        if (ready_player_counter>=number_of_players)
+                            break;
+                        System.out.println("New client connected "+clientSocket);
+                        if (ready_player_counter>=number_of_players)
+                            break;
+                        ClientHandler clientHandler = new ClientHandler(clientSocket, server , narrator);
+                        if (ready_player_counter>=number_of_players)
+                            break;
+                        clientHandlers.add(clientHandler);
+                        if (ready_player_counter>=number_of_players)
+                            break;
+                        clientHandler.start();
+                        if (ready_player_counter>=number_of_players)
+                            break;
+                    }
+                }
+            };
+            thread.start();
+            System.out.println("accept thread");
+            while (true){
+                synchronized ((Integer)number_of_players) {
+                    synchronized ((Integer) ready_player_counter) {
+                        if ((number_of_players - ready_player_counter) == 0) {
+                            thread.stop();
+                            System.out.println("thread stopped");
+                            break;
+                        }
+                    }
+                }
             }
+            System.out.println("ravi started");
             narrator.start();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
-
-//    private void printHowManyPlayersRemained() {
-//        int numberOfPreviousReadyPlayers = -1;
-//        int n = 0;
-//        while (true){
-//            if (numberOfPreviousReadyPlayers != (n = ready_player_counter)){
-//                numberOfPreviousReadyPlayers = n;
-//                try {
-//                    for (ClientHandler clientHandler : clientHandlers){
-//                        clientHandler.send("Number of players remained: " + numberOfRemainedPlayersToTypeREADY());
-//                    }
-////                    dataOutputStream.writeUTF("Number of players remained: " + server.numberOfRemainedPlayersToTypeREADY());
-////                    dataOutputStream.flush();
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }
-//    }
 }

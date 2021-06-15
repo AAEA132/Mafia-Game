@@ -20,7 +20,6 @@ public class WriteClientStuffForServerToBePrinted extends Thread{
         while ( !line.equals("EXIT")){
             line = scanner.nextLine();
             scanner = new Scanner(System.in);
-//            printWriter.println(line);
             try {
                 dataOutputStream.writeUTF(line);
                 dataOutputStream.flush();
